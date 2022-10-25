@@ -1,0 +1,9 @@
+[submodule "src/IIoT-Projeto/lib/keypad4x4"]
+	path = src/IIoT-Projeto/lib/keypad4x4
+	url = https://github.com/william-hazem/keypad4x4
+[submodule "src/IIoT-Projeto/lib/esp32-mpu6050"]
+	path = src/IIoT-Projeto/lib/esp32-mpu6050
+	url = https://github.com/gabrielbvicari/esp32-mpu6050
+[submodule "src/IIoT-Projeto/lib/esp32-i2c_rw"]
+	path = src/IIoT-Projeto/lib/esp32-i2c_rw
+	url = https://github.com/gabrielbvicari/esp32-i2c_rw
