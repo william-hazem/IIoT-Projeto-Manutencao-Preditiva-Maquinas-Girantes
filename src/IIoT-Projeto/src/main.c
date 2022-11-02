@@ -12,10 +12,14 @@ SSD1306_t g_oled;
 char* alignCenter(char* text);
 
 void init_oled();
-
+void startup_screen();
 
 void app_main() 
 {
+
+    gpio_num_t RST_BUTTON = GPIO_NUM_34;
+    gpio_set_direction(RST_BUTTON, GPIO_MODE_INPUT);
+
     init_oled();
     i2c_config_t i2c_config = {
 		.mode = I2C_MODE_MASTER,
@@ -42,16 +46,29 @@ void app_main()
     char buffer[32] = "";
     
     ssd1306_display_text(&g_oled, 2, "  x     y    z  ", 22, false);
+    
     for(;;)
     {
         
+        if(!gpio_get_level(RST_BUTTON)) /// apenas simula o reset das informações
+        {
+            startup_screen();
+            while(!gpio_get_level(RST_BUTTON));
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            ssd1306_clear_screen(&g_oled, false);
+            ssd1306_display_text(&g_oled, 2, "  x     y    z  ", 22, false);
+
+            continue;
+        }
+
         mpu6050_get_acceleration(&data);
-        
-        ets_printf("%d, %d, %d\n", data.accel_x, data.accel_y, data.accel_z);
+        // ets_printf("%d, %d, %d\n", data.accel_x, data.accel_y, data.accel_z);
 
         sprintf(buffer, "%d %d %d", data.accel_x, data.accel_y, data.accel_z);
         ssd1306_clear_line(&g_oled, 4, false);
         ssd1306_display_text(&g_oled, 4, buffer, 22, false);
+        
+        
         vTaskDelay(50);
     }
 }
@@ -72,6 +89,12 @@ void init_oled() {
     i2c_master_init(&g_oled, 23, 22, -1);
 
     ssd1306_init(&g_oled, 128, 64);
+    
+    startup_screen();
+}
+
+void startup_screen()
+{
     ssd1306_clear_screen(&g_oled, false);
     
     char *text = malloc(sizeof(char)*17);
