@@ -2,17 +2,17 @@
 #include <keypad.h>
 #include <string.h>
 
-#include <mpu6050/mpu6050.h>
+#include <esp_sleep.h>
 #include <esp_err.h> 
 #include <freertos/FreeRTOS.h> 
 #include <freertos/task.h>
+#include <time.h>
 
 #include "i2c_bus_mng.h"
 #include "oled.h"
 #include "task_priorities.h"
 #include "vibration.h"
-
-
+#include "datalogger.h"
 
 void app_main() 
 {
@@ -26,27 +26,41 @@ void app_main()
     init_oled();
     vbr_init();
 
-    xTaskCreate(vbr_task, "AQUISITION TASK", 8000, NULL, AQUISITION_PRIORITY, NULL);
-    xTaskCreate(display_task, "DISPLAY TASK", 8000, NULL, DISPLAY_DATA, NULL);
+    xTaskCreate(vbr_task, "AQUISITION TASK", 8000, NULL, AQUISITION_PRIORITY, &gth_aquisition);
+    xTaskCreate(display_task, "DISPLAY TASK", 8000, NULL, DISPLAY_DATA, &gth_display);
     
-
-    if(mpu6050_test_connection())
-        ets_printf("RESPONDING\n");
-    
-    
+    time_t time_before = time(NULL);
     for(;;)
     {
         
+        if ((time(NULL) - time_before) >= 10)
+        {
+
+            vTaskSuspend(gth_display);
+            vTaskSuspend(gth_aquisition);
+            
+            esp_sleep_enable_timer_wakeup(WAKEUP_PERIOD);
+            esp_light_sleep_start();
+
+            /// re-inicializa as tasks após o sono profundo
+            vTaskResume(gth_display);
+            vTaskResume(gth_aquisition);
+            
+            time_before = time(NULL);
+        }
+
         if(!gpio_get_level(RST_BUTTON)) /// apenas simula o reset das informações
         {
-            while(!gpio_get_level(RST_BUTTON));
             display_reset();
-            continue;
+            // while(!gpio_get_level(RST_BUTTON)) vTaskDelay(1);
+            
         }
-        
-        
+
         vTaskDelay(66 / portTICK_PERIOD_MS);
+
     }
+
+    
 }
 
 

@@ -9,7 +9,7 @@ uint8_t vbr_init() {
     
     vbr_head = vbr_data;
     vbr_end = vbr_data + VBR_MAX_BUFFER_SIZE;
-    memset(vbr_head, 0x0, VBR_MAX_BUFFER_SIZE);
+    memset(vbr_head, 0x0, sizeof(uint16_t) * VBR_MAX_BUFFER_SIZE);
     mpu6050_init();
     #ifdef TESTE
         uint16_t tmp[] = VBR_DEFAULT_DATA;

@@ -12,7 +12,8 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
-
 #define TESTE 1// habilita configurações de teste
+
+#define WAKEUP_PERIOD 10000000U
 
 #endif //! __COMMON_H
