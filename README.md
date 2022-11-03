@@ -1,4 +1,17 @@
-# IIoT-Projeto-Manutencao-Preditiva-Maquinas-Girantes
+<div align="center">
+<h1>Inteligência Industrial das Coisas (IIoT) <br> Manutenção Preditiva de Máquinas Girantes</h1>
+</div>
+
+## Problemática
+
+Equipamentos girantes compõem diversas máquinas nos setores industriais, independentemente do ramo de atuação da planta. Ou seja, são largamente utilizados para diversas finalidades como automóveis, braços mecânicos, robôs, esteiras, prensas e em diversos outros tipos de maquinário pesado. 
+
+Daí, quando estes equipamentos deterioram-se e não havendo o devido cuidado, as linhas de produção poderão ser repentinamente interrompidas ocasionado o ócio das cadeias de produção, redução de produtividade e lucratividade das indústrias. Aquém de atrasos de entregas, perdas de clientes e defeitos ainda graves e não previsíveis.
+
+Efetuar a substituição de um equipamento antes da hora, ocasionará em prejuízos às margens de lucro da companhia. Mas também, deixar de realizar a manutenção dos equipamentos poderá trazer ainda mais prejuízos.
+
+Então, ferramentas de análise para máquinas girantes poderão auxiliar na tomada de decisão, apontando falhas e estimando a vida útil restante dos equipamentos. Para que, possa ocorrer a manutenção preventiva do equipamento antes que ocorra uma falha crítica, assim minimizando os impactos na produção.
+
 
 ## Instalação
 
