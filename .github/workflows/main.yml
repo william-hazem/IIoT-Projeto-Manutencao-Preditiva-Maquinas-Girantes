@@ -42,10 +42,8 @@ jobs:
           cd -
           export IDF_PATH=`pwd`/esp-idf
           echo "IDF_PATH is set to $IDF_PATH"
-      - name: Build Project
-        run: |
           echo $IDF_PATH
+          ls $IDF_PATH
           cd src/IIoT-Projeto/
           idf.py build
-          
           
