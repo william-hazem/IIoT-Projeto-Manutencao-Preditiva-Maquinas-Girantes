@@ -11,9 +11,9 @@ on:
 jobs:
   build_daily:
     runs-on: ubuntu-latest
-    name: Build Examples
+    name: Build
   
-  build:
+  steps:
 
     runs-on: ubuntu-latest
 
