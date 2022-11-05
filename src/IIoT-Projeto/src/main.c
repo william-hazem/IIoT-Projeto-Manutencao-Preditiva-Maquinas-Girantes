@@ -14,7 +14,7 @@
 #include "vibration.h"
 #include "datalogger.h"
 
-void app_main() 
+extern void app_main() 
 {
 
     /// Inicializa o driver i2c
