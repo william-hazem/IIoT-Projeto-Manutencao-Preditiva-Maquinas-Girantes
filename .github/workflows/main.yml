@@ -42,7 +42,6 @@ jobs:
           cd -
           export IDF_PATH=`pwd`/esp-idf
           echo "IDF_PATH is set to $IDF_PATH"
-          ./scripts/build_examples.sh esp32
       - name: Build Project
         run: |
           cd src/IIoT-Projeto/
