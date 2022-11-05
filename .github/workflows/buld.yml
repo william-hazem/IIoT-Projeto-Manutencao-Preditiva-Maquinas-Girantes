@@ -19,7 +19,7 @@ jobs:
       with:
         submodules: 'recursive'
     - name: rename
-      run: rm src main
+      run: mv src main
     - name: esp-idf build
       uses: espressif/esp-idf-ci-action@v1
       with:
