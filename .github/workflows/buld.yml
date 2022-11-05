@@ -1,0 +1,30 @@
+name: build_esp32
+
+on:
+  schedule:
+    # 1:30am UTC is 7am IST depending on daylight savings.
+    - cron: '30 13 * * *'
+
+  # Allow manually triggering of the workflow.
+  workflow_dispatch: {}
+  
+jobs:
+  build_daily:
+    runs-on: ubuntu-latest
+    name: Build Examples
+  
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: esp-idf build
+      uses: espressif/esp-idf-ci-action@v1
+      with:
+        esp_idf_version: v4.4
+        target: esp32s2
+        path: 'esp32-s2-hmi-devkit-1/examples/smart-panel'
