@@ -1,4 +1,4 @@
-name: build_esp32
+name: build
 
 on:
   schedule:
