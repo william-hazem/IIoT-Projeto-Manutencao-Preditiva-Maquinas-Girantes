@@ -19,10 +19,10 @@ jobs:
       with:
         submodules: 'recursive'
     - name: rename
-      run: mv src main
+      run: mv src/IIoT-Projeto/src src/IIoT-Projeto/main
     - name: esp-idf build
       uses: espressif/esp-idf-ci-action@v1
       with:
         esp_idf_version: v4.4
         target: esp32
-        path: 'main/IIoT-Projeto'
+        path: 'src/IIoT-Projeto'
