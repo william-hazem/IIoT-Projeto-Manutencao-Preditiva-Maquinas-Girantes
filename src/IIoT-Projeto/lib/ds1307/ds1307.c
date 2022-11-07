@@ -71,7 +71,9 @@ esp_err_t ds1307_get_time(i2c_dev_t *dev, struct tm *time)
 
     uint8_t buf[7];
 
-    i2c_dev_read_reg(dev, TIME_REG, buf, 7);
+    esp_err_t ret = i2c_dev_read_reg(dev, TIME_REG, buf, 7);
+    if(ESP_OK != ret)
+        ESP_LOGE("DS1307", "Erro no ds1307 %s", esp_err_to_name(ret));
 
     time->tm_sec = bcd2dec(buf[0] & SECONDS_MASK);
     time->tm_min = bcd2dec(buf[1]);

@@ -15,29 +15,46 @@
 
 #include <freertos/task.h>
 
+/**
+ * @brief Prioridades das tarefas
+ */
 typedef enum TASK_PRIORITIES
 {
     DISPLAY_DATA = 1,
     AQUISITION_PRIORITY = 10,
 }TASK_PRIORITIES;
 
+/**
+ * @brief Lista de tarefas
+ */
 typedef enum TASK_IDS
 {
-    DISPLAY = 1,
+    DISPLAY = 0,
     AQUISITION,
     RUN,
 }TASK_IDS;
 
-const int TASK_FREQS[] = {
-    15,
-    300,
+/**
+ * @brief Tabela de frequências das tarefas
+ * 
+ */
+const static int TASK_FREQS[] = {
+    10,     // display
+    300,    // aquisition
     10,
 };
 
+/* Manipulador global de tarefas (MGT) */
+
 TaskHandle_t gth_display;
+TaskHandle_t gth_update_hora;
 TaskHandle_t gth_aquisition;
 TaskHandle_t gth_run;
 
+/**
+ * @brief Recupera o período em milisegundos
+ */
+#define TASK_PERIOD(id) (int)((float)(1.0f / TASK_FREQS[id]) * 1000u)
 
 
 #endif //!__TASK_PRIORITIES_H

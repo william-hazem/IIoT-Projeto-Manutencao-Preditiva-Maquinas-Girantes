@@ -12,8 +12,13 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
-#define TESTE 1// habilita configurações de teste
+#define APP_RUN 0               // Estado de execução
 
-#define WAKEUP_PERIOD 10000000U
+#if APP_RUN ==2                   // habilita configurações de teste
+#   define TESTE
+#endif
+
+#define WAKEUP_PERIOD 10000000U // Periodo de aquisição dos dados
+
 
 #endif //! __COMMON_H
