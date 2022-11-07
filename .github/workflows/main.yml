@@ -44,6 +44,6 @@ jobs:
           echo "IDF_PATH is set to $IDF_PATH"
           echo $IDF_PATH
           ls $IDF_PATH
-          cd src/IIoT-Projeto/
+          cd `pwd`/src/IIoT-Projeto
           idf.py build
           
