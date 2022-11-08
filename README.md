@@ -20,6 +20,14 @@ Algumas dependências possuem fácil instalação por meio de seus repositórios
 git clone --recurse-submodules https://github.com/william-hazem/IIoT-Projeto-Manutencao-Preditiva-Maquinas-Girantes
 ```
 
+## Material utilizado
+* Esp-32
+* Display Oled Ssd 1306
+* Mpu Acelerômetro e Giroscópio MPU-6050
+* Sensor de temperatura LM35 
+* Micro Sd Wemos D1 Mini Data Logger Shield + Relógio Rtc Ds1307 
+* Push Button
+
 ### Ferramentas necessárias
 * [vscode](https://code.visualstudio.com/)
 * [extensão do vscode: platform.io](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide)
