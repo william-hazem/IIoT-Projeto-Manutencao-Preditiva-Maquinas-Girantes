@@ -22,8 +22,8 @@ git clone --recurse-submodules https://github.com/william-hazem/IIoT-Projeto-Man
 
 ## Material utilizado
 * [Esp-32](https://www.alldatasheet.com/view.jsp?Searchword=Esp32%20datasheet&gclid=CjwKCAiA9qKbBhAzEiwAS4yeDeI7po4PLbK3pjVwZteYmlg82jyRDaVdivmHAtsPh1cijuFFRzoJ9xoCtMAQAvD_BwE)
-* [Display Oled Ssd 1306]
-* [Mpu Acelerômetro e Giroscópio MPU-6050](https://www.alldatasheet.com/view.jsp?Searchword=Ssd1306%20datasheet&gclid=CjwKCAiA9qKbBhAzEiwAS4yeDXkNi0S-0cQt8U6twi88OrERvhTNjdOnKnPOsK7tNTRjT_KVJQgxNhoCB9UQAvD_BwE)
+* [Display Oled Ssd 1306](https://www.alldatasheet.com/view.jsp?Searchword=Ssd1306%20datasheet&gclid=CjwKCAiA9qKbBhAzEiwAS4yeDXkNi0S-0cQt8U6twi88OrERvhTNjdOnKnPOsK7tNTRjT_KVJQgxNhoCB9UQAvD_BwE)
+* [Mpu Acelerômetro e Giroscópio MPU-6050](https://www.alldatasheet.com/view.jsp?Searchword=MPU-6050)
 * [Sensor de temperatura LM35](https://www.alldatasheet.com/view.jsp?Searchword=Lm35%20datasheet&gclid=CjwKCAiA9qKbBhAzEiwAS4yeDcAv1BQVh7PaoJ-mTnymIodMIcGNu__R-WiTKMm82buFWD2Po9-bDxoCRxEQAvD_BwE)
 * [Micro Sd Wemos D1 Mini Data Logger Shield + Relógio Rtc Ds1307](https://www.usinainfo.com.br/rtc-arduino/shield-data-logger-com-rtc-ds1307-para-wemos-d1-mini-6274.html)
 * [Push Button](https://components101.com/switches/push-button)
