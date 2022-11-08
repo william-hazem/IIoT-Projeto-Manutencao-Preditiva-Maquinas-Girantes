@@ -1,4 +1,4 @@
-#include <ssd1306.h>
+#include <ssd1306.h> 
 #include <keypad.h>
 #include <string.h>
 
@@ -13,6 +13,7 @@
 #include "task_priorities.h"
 #include "vibration.h"
 #include "datalogger.h"
+#include "Temp.h"
 
 const char* TAG = "APP";
 
@@ -52,6 +53,7 @@ void app_main()
     xTaskCreate(display_task, "DISPLAY TASK", 8000, NULL, DISPLAY_DATA, &gth_display);
     xTaskCreate(update_hora_task, "UPDATE HORA", 3000, NULL, DISPLAY_DATA, &gth_update_hora);
     xTaskCreate(vbr_task, "AQUISITION TASK", 8000, NULL, AQUISITION_PRIORITY, &gth_aquisition);
+    xTaskCreate(Temp_tesk, "TEMPERATUDA TASK", 3000, NULL, TEMP_PRIORITY, &gth_temp);
 
     ets_printf("SETUP FINISHED\n");
 

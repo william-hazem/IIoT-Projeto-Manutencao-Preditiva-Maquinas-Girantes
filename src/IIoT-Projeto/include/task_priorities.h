@@ -22,6 +22,7 @@ typedef enum TASK_PRIORITIES
 {
     DISPLAY_DATA = 1,
     AQUISITION_PRIORITY = 10,
+    TEMP_PRIORITY = 9,
 }TASK_PRIORITIES;
 
 /**
@@ -31,7 +32,7 @@ typedef enum TASK_IDS
 {
     DISPLAY = 0,
     AQUISITION,
-    RUN,
+    TEMP,
 }TASK_IDS;
 
 /**
@@ -41,7 +42,7 @@ typedef enum TASK_IDS
 const static int TASK_FREQS[] = {
     10,     // display
     300,    // aquisition
-    10,
+    1,
 };
 
 /* Manipulador global de tarefas (MGT) */
@@ -50,6 +51,7 @@ TaskHandle_t gth_display;
 TaskHandle_t gth_update_hora;
 TaskHandle_t gth_aquisition;
 TaskHandle_t gth_run;
+TaskHandle_t gth_temp;
 
 /**
  * @brief Recupera o período em milisegundos
