@@ -7,7 +7,7 @@
 
 #include "i2c_bus_mng.h"
 #include "task_priorities.h"
-
+#include "Temp.h"
 
 
 char* alignCenter(char* text) {
@@ -83,7 +83,7 @@ void display_task(void *args)
         sprintf(buffer3, "rms: %.2f", vrms);
 
 
-        sprintf(strtemp," %.2fC", temp);
+        sprintf(strtemp," %.2fC", tempC);
         strcat(buffer4, g_dados.hora);
         strcat(buffer4, strtemp);
 
