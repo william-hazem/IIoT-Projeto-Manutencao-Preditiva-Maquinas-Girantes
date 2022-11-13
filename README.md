@@ -1,5 +1,7 @@
+![Compilando](https://github.com/william-hazem/IIoT-Projeto-Manutencao-Preditiva-Maquinas-Girantes/actions/workflows/main.yml/badge.svg)
 <div align="center">
 <h1>Inteligência Industrial das Coisas (IIoT) <br> Manutenção Preditiva de Máquinas Girantes</h1>
+
 </div>
 
 ## Problemática
