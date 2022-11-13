@@ -30,6 +30,8 @@ jobs:
         pip install platformio
     # It is important to first install the libraries before compiling, since otherwise compilation might fail to find the just-installed libraries
     - name: Install platformIO libraries
-      run: pio lib install
+      run:  pio lib install
     - name: Run PlatformIO
-      run: platformio run
+      run: |
+        cd src/IIoT-Projeto/
+        platformio run
