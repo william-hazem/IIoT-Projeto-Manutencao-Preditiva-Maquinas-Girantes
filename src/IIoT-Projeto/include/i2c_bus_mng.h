@@ -46,6 +46,6 @@ uint8_t i2c_bus_init();
     while(xSemaphoreTake(i2c_mutex, ( TickType_t ) t ) != pdTRUE) {;} \
     x;                                                                \
     xSemaphoreGive(i2c_mutex); 
-
+//! I2C_WAIT_UNTIL_FREE
 
 #endif //! __I2C_BUS_MNG_H
