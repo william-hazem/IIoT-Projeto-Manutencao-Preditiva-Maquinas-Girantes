@@ -14,11 +14,31 @@
 #include "datalogger.h"
 #include "Temp.h"
 
+#include <wifi.h>
+#include <http.h>
+#include <nvs_flash.h>
+
 const char* TAG = "APP";
 
 void app_main() 
 {
+    esp_err_t ret_flash = nvs_flash_init();
+    if (ret_flash == ESP_ERR_NVS_NO_FREE_PAGES || ret_flash == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret_flash = nvs_flash_init();
+        ESP_LOGE("main", "-> NVS ERASED");
+    }
 
+    wifi_connection_t conn1 = {.ssid = "brisa-2816643", .password="9oqgl1e0"};
+    wifi_register_connection(conn1);
+    wifi_init_sta();
+    http_init_server();
+    // esp_err_t statusWifi = wifi_init_sta();
+    // if(statusWifi != ESP_OK)
+    // {
+    //     ESP_LOGE(TAG, "WiFi não inicializado, verifique os parâmetros de conexão");
+    //     return;
+    // }
     /// Inicializa o driver i2c
     i2c_bus_init();
     
@@ -52,7 +72,7 @@ void app_main()
     xTaskCreate(display_task, "DISPLAY TASK", 8000, NULL, DISPLAY_DATA, &gth_display);
     xTaskCreate(update_hora_task, "UPDATE HORA", 3000, NULL, DISPLAY_DATA, &gth_update_hora);
     xTaskCreate(vbr_task, "AQUISITION TASK", 8000, NULL, AQUISITION_PRIORITY, &gth_aquisition);
-    xTaskCreate(Temp_tesk, "TEMPERATUDA TASK", 3000, NULL, TEMP_PRIORITY, &gth_temp);
+    // xTaskCreate(Temp_tesk, "TEMPERATUDA TASK", 1024, NULL, TEMP_PRIORITY, &gth_temp);
 
     ets_printf("SETUP FINISHED\n");
 
