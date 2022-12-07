@@ -16,9 +16,9 @@
 
 #include <ds1307.h>
 
-#define SPI_CLK     GPIO_NUM_21
+#define SPI_CLK     GPIO_NUM_18
 #define SPI_MISO    GPIO_NUM_19
-#define SPI_MOSI    GPIO_NUM_18
+#define SPI_MOSI    GPIO_NUM_23
 #define SPI_CS      GPIO_NUM_5
 #define SPI_DMA_CHAN 1
 
@@ -39,6 +39,13 @@ i2c_dev_t dev;
  * @return ESP_OK se todos os recursos forem inicializados 
  */
 int8_t datalogger_init();
+
+/**
+ * @brief Salva os dados da pilha no cartão SD
+ * 
+ * @param args 
+ */
+void datalogger_task(void *args);
 
 /**
  * @brief Recupera o tempo salvo no módulo RTC

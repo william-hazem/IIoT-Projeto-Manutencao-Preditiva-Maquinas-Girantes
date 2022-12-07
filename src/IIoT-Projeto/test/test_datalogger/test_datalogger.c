@@ -10,9 +10,9 @@
 #include <sdmmc_cmd.h>
 #include <esp_vfs_fat.h>
 
-#define SPI_CLK     GPIO_NUM_21
+#define SPI_CLK     GPIO_NUM_18
 #define SPI_MISO    GPIO_NUM_19
-#define SPI_MOSI    GPIO_NUM_18
+#define SPI_MOSI    GPIO_NUM_23
 #define SPI_CS      GPIO_NUM_5
 #define SPI_DMA_CHAN 1
 

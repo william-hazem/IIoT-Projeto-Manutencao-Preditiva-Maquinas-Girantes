@@ -3,7 +3,7 @@
 #include <mpu6050/mpu6050.h>
 #include <memory.h>
 
-#include "oled.h"
+#include "common.h" // g_dados
 
 #include "i2c_bus_mng.h"
 #include "task_priorities.h"
@@ -35,13 +35,14 @@ uint8_t vbr_init() {
 
     return ret;
 }
-
+#include "esp_log.h"
 void vbr_task(void *args) {
     bool first_run = true;
 
 
     float *vbr_min = &g_dados.vbr_mim;
     float *vbr_max = &g_dados.vbr_max;
+    g_dados.vbr_count = 0;
     for(;;)
     {
         if(vbr_head == vbr_end) // verifica se a referência estar no final da memória alocada
@@ -49,14 +50,14 @@ void vbr_task(void *args) {
 
         #ifndef TESTE
         // ets_printf("MAKING RUN\n");
-        if(xSemaphoreTake(i2c_mutex, (TickType_t) 10) == pdTRUE)
-        {
-            *vbr_head = mpu6050_get_acceleration_x() / AC2G_SCALE;
-            // ets_printf("READING: %d\n", (int)*vbr_head);
-            g_dados.vbr_j = vbr_head;
-        }
-        else
+        if(xSemaphoreTake(i2c_mutex, (TickType_t) 10) != pdTRUE)
             continue;
+        
+        *vbr_head = mpu6050_get_acceleration_x() / AC2G_SCALE;
+        // ets_printf("READING: %d\n", (int)*vbr_head);
+        g_dados.vbr_j = vbr_head;
+        g_dados.vbr_count += 1;
+        
         xSemaphoreGive(i2c_mutex);
         #else
             // ets_printf("valor: %d", *vbr_head);

@@ -9,6 +9,8 @@
 #include "task_priorities.h"
 #include "Temp.h"
 
+#include "common.h"     // app_t
+
 
 char* alignCenter(char* text) {
     char tmp[17];
@@ -26,7 +28,7 @@ void init_oled() {
     g_dados.vbr_begin = NULL;
     g_dados.vbr_end = NULL;
 
-    i2c_master_init(&g_oled, 23, 22, -1);
+    i2c_master_init(&g_oled, I2C_SDA, I2C_SDL, -1);
 
     ssd1306_init(&g_oled, 128, 64);
 }
@@ -69,18 +71,19 @@ void display_task(void *args)
     
     I2C_WAIT_UNTIL_FREE(ssd1306_clear_screen(&g_oled, false), 5)
 
+    float * vbr_ref = g_dados.vbr_begin;
     for(;;) if(xSemaphoreTake(i2c_mutex, ( TickType_t ) 5 ) == pdTRUE)
     {
 
-        int n = g_dados.vbr_j - g_dados.vbr_begin;
-        float vrms = rmsf(g_dados.vbr_begin, n);
-        g_dados.vbr_j = g_dados.vbr_begin;
+        int n = vbr_ref- g_dados.vbr_begin;
+        g_dados.vbr_rms = rmsf(g_dados.vbr_begin, n);
+        vbr_ref = g_dados.vbr_j;
 
         float temp = mpu6050_get_temperature()/340 + 36.53;
 
         sprintf(buffer1, "max: %.2f", g_dados.vbr_max);
         sprintf(buffer2, "min: %.2f", g_dados.vbr_mim);
-        sprintf(buffer3, "rms: %.2f", vrms);
+        sprintf(buffer3, "rms: %.2f", g_dados.vbr_rms);
 
 
         sprintf(strtemp," %.2fC", tempC);

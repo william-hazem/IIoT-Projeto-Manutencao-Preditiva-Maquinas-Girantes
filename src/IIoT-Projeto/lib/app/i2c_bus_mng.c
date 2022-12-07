@@ -3,7 +3,6 @@
 #include <driver/i2c.h>
 #include <esp_log.h>
 
-#include "common.h"
 
 #define TAG "I2C BUS MANAGER"
 
@@ -23,9 +22,19 @@ uint8_t i2c_bus_init()
 	};
 	ESP_ERROR_CHECK(i2c_param_config(I2C_PORT, &i2c_config));
 	
-	if(ESP_OK != i2c_driver_install(I2C_PORT, I2C_MODE_MASTER, 0, 0, 0)){
-        ESP_LOGI(TAG, "Driver i2c, já instalado");
+	esp_err_t ret_i2c = i2c_driver_install(I2C_PORT, I2C_MODE_MASTER, 0, 0, 0);
+	if(ESP_OK != ret_i2c) 
+	{
+		if(ESP_ERR_INVALID_ARG == ret_i2c)
+		{
+        	ESP_LOGE(TAG, "Driver i2c, parâmetros inválidos");
+			
+		}
+		else
+        	ESP_LOGE(TAG, "Driver i2c, já instalado");
+		return 1;
     }
-
+	ESP_LOGI(TAG, "I2C BUS inicializado");
+	
     return 0;
 }

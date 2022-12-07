@@ -21,8 +21,8 @@
 
 
 
-#define I2C_SDL 22
-#define I2C_SDA 23
+#define I2C_SDL 14
+#define I2C_SDA 13
 #define I2C_FREQ 400000
 #define I2C_PORT I2C_NUM_0
 

@@ -40,7 +40,7 @@ typedef enum TASK_IDS
  * 
  */
 const static int TASK_FREQS[] = {
-    10,     // display
+    1,      // display
     300,    // aquisition
     1,
 };

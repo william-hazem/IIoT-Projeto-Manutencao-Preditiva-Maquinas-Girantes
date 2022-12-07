@@ -17,19 +17,6 @@
 
 SSD1306_t g_oled;
 
-typedef struct display_dados_t {
-    float vbr_max, vbr_mim, vbr_rms;
-    float *vbr_begin, *vbr_end;
-    float *vbr_i, *vbr_j;
-    char hora[32];
-} display_dados_t;
-
-display_dados_t g_dados;
-
-
-
-
-
 /**
  * @brief Função auxiliar para centralizar textos na tela
  * 

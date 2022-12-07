@@ -3,7 +3,7 @@
 #include <ds1307.h>
 #include <time.h>
 
-#include "i2c_bus_mng.h"
+#include <i2c_bus_mng.h>
 
 #include <esp_log.h>
 #include <esp_err.h>
@@ -37,13 +37,21 @@ sdmmc_card_t *card;
  * 
  * @return ESP_OK caso inicializado
  */
-int8_t sdcard_init();
+esp_err_t sdcard_init();
 
 
 int8_t datalogger_init()
 {
     ds1307_init_desc(&dev, I2C_PORT, I2C_SDA, I2C_SDL);
-    sdcard_init();
+    esp_err_t ret_sdcard = sdcard_init();
+    if(ret_sdcard == ESP_OK)
+    {
+        ESP_LOGI(TAG, "* cartão sd inicializado");
+    }
+    else
+    {
+        ESP_LOGE(TAG, "* cartão sd não inicializado [crítico]");
+    }
     return 0;
 }
 
@@ -81,7 +89,7 @@ uint8_t setTime(time_t time)
 
 }
 
-int8_t sdcard_init()
+esp_err_t sdcard_init()
 {
     esp_err_t ret = ESP_OK;
 
@@ -122,7 +130,7 @@ int8_t sdcard_init()
 
     ESP_LOGI("SDcard_Init", "Mounting filesystem");
     ret = esp_vfs_fat_sdspi_mount(mount_point, &host, &slot_config, &mount_config, &card);
-
+    // ret = sdmmc_card_init(&host, card);
     if (ret != ESP_OK) {
         spi_bus_free(host.slot);
         if (ret == ESP_FAIL) {
