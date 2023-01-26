@@ -28,6 +28,9 @@
 #endif
 
 float vbr_data[VBR_MAX_BUFFER_SIZE];
+float vbr_datay[VBR_MAX_BUFFER_SIZE];
+float vbr_dataz[VBR_MAX_BUFFER_SIZE];
+
 float *vbr_head, *vbr_end;
 
 /**

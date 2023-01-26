@@ -16,8 +16,8 @@
    If you'd rather not, just change the below entries to strings with
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
-#define EXAMPLE_ESP_WIFI_SSID      "TP-Link"
-#define EXAMPLE_ESP_WIFI_PASS      "kwe12345"
+#define EXAMPLE_ESP_WIFI_SSID      "brisa-2816643"
+#define EXAMPLE_ESP_WIFI_PASS      "9oqgl1e0"
 #define EXAMPLE_ESP_MAXIMUM_RETRY  3
 
 #if CONFIG_ESP_WIFI_AUTH_OPEN

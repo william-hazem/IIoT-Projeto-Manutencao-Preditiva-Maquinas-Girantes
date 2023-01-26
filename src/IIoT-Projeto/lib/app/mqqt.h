@@ -21,8 +21,13 @@
 #include "mqtt_client.h"
 
 #include "common.h"
+#include "azure-key.h"
+
+#define W2P "devices/"IOTHUB_DEVID"/messages/events/"
 
 static const char *TAGM = "MQTT_EXAMPLE";
+
+bool mqttConnected;
 
 esp_mqtt_client_handle_t client;
 
@@ -36,24 +41,27 @@ static void log_error_if_nonzero(const char * message, int error_code)
 
 static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 {
+    esp_log_level_set("*", ESP_LOG_INFO);
     esp_mqtt_client_handle_t client = event->client;
     int msg_id;
     // your_context_t *context = event->context;
     switch (event->event_id) {
         case MQTT_EVENT_CONNECTED:
+            mqttConnected = true;
             ESP_LOGI(TAGM, "MQTT_EVENT_CONNECTED");
-            msg_id = esp_mqtt_client_publish(client, W2P"/temp", "data_3", 0, 1, 1);
+            msg_id = esp_mqtt_client_publish(client, W2P, IOTHUB_DEVID" connected", 0, 1, 1);
             ESP_LOGI(TAGM, "sent publish successful, msg_id=%d", msg_id);
 
             break;
         case MQTT_EVENT_DISCONNECTED:
+            mqttConnected = false;
             ESP_LOGI(TAGM, "MQTT_EVENT_DISCONNECTED");
             break;
 
         case MQTT_EVENT_SUBSCRIBED:
             // ESP_LOGI(TAGM, "MQTT_EVENT_SUBSCRIBED, msg_id=%d", event->msg_id);
-            msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "data", 0, 0, 0);
-            ESP_LOGI(TAGM, "sent publish successful, msg_id=%d", msg_id);
+            // msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "data", 0, 0, 0);
+            // ESP_LOGI(TAGM, "sent publish successful, msg_id=%d", msg_id);
             break;
         case MQTT_EVENT_UNSUBSCRIBED:
             ESP_LOGI(TAGM, "MQTT_EVENT_UNSUBSCRIBED, msg_id=%d", event->msg_id);
@@ -78,6 +86,8 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
             break;
         default:
             ESP_LOGI(TAGM, "Other event id:%d", event->event_id);
+            
+            
             break;
     }
     return ESP_OK;
@@ -90,33 +100,17 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
 static void mqtt_app_start(void)
 {
+    mqttConnected = false;
+    ESP_LOGD(TAGM, "inicializando cliente mqtt");
+    const char* username = IOTHUB_NAME".azure-devices.net/"IOTHUB_DEVID"/?api-version=2021-04-12";
+    ESP_LOGD(TAGM, "mqtt username: %s", username);
     esp_mqtt_client_config_t mqtt_cfg = {
-        .uri = "mqtt://"BROKER_URI,
+        .uri = "mqtts://"IOTHUB_NAME".azure-devices.net",
+        .port=8883,
+        .username = username,
+        .client_id = IOTHUB_DEVID,
+        .password = IOTHUB_KEY,
     };
-#if CONFIG_BROKER_URL_FROM_STDIN
-    char line[128];
-
-    if (strcmp(mqtt_cfg.uri, "FROM_STDIN") == 0) {
-        int count = 0;
-        printf("Please enter url of mqtt broker\n");
-        while (count < 128) {
-            int c = fgetc(stdin);
-            if (c == '\n') {
-                line[count] = '\0';
-                break;
-            } else if (c > 0 && c < 127) {
-                line[count] = c;
-                ++count;
-            }
-            vTaskDelay(10 / portTICK_PERIOD_MS);
-        }
-        mqtt_cfg.uri = line;
-        printf("Broker url: %s\n", line);
-    } else {
-        ESP_LOGE(TAGM, "Configuration mismatch: wrong broker url");
-        abort();
-    }
-#endif /* CONFIG_BROKER_URL_FROM_STDIN */
 
     client = esp_mqtt_client_init(&mqtt_cfg);
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, client);
@@ -129,13 +123,18 @@ static void mqtt_app_start(void)
 char buffer_vbr[3000];
 void mqtt_publicar(void)
 {
+    if(!mqttConnected)
+        return;
+
     char buffer[32] = "";
     
     sprintf(buffer, "%.2f", g_dados.temperatura);
-    esp_mqtt_client_publish(client, W2P"/temp", buffer, strlen(buffer), 1, 1);
+    esp_mqtt_client_publish(client, W2P"temp", buffer, strlen(buffer), 1, 1);
     sprintf(buffer, "%.2f", g_dados.vbr_rms);
-    esp_mqtt_client_publish(client, W2P"/rms", buffer, strlen(buffer), 1, 1);
+    esp_mqtt_client_publish(client, W2P"/accRMS", buffer, strlen(buffer), 1, 1);
+    
+    // esp_mqtt_client_publish(client, W2P"/rms", buffer, strlen(buffer), 1, 1);
 
-    memcpy(buffer_vbr, g_dados.vbr_begin, g_dados.vbr_end - g_dados.vbr_begin);
-    esp_mqtt_client_publish(client, W2P"/vbr_raw", buffer_vbr, 3000, 1, 1);
+    // memcpy(buffer_vbr, g_dados.vbr_begin, g_dados.vbr_end - g_dados.vbr_begin);
+    // esp_mqtt_client_publish(client, W2P"/vbr_raw", buffer_vbr, 3000, 1, 1);
 }

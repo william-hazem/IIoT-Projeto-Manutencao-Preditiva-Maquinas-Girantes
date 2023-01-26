@@ -20,9 +20,9 @@
  */
 typedef enum TASK_PRIORITIES
 {
-    DISPLAY_DATA = 1,
-    AQUISITION_PRIORITY = 10,
-    TEMP_PRIORITY = 9,
+    DISPLAY_DATA = 10,
+    AQUISITION_PRIORITY = 50,
+    TEMP_PRIORITY = 10,
 }TASK_PRIORITIES;
 
 /**
@@ -41,7 +41,7 @@ typedef enum TASK_IDS
  */
 const static int TASK_FREQS[] = {
     1,      // display
-    300,    // aquisition
+    200,    // aquisition
     1,
 };
 

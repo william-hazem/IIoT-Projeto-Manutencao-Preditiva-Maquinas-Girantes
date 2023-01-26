@@ -80,13 +80,14 @@ void display_task(void *args)
         vbr_ref = g_dados.vbr_j;
 
         float temp = mpu6050_get_temperature()/340 + 36.53;
-
+        g_dados.temperatura = temp;
+        
         sprintf(buffer1, "max: %.2f", g_dados.vbr_max);
         sprintf(buffer2, "min: %.2f", g_dados.vbr_mim);
         sprintf(buffer3, "rms: %.2f", g_dados.vbr_rms);
 
 
-        sprintf(strtemp," %.2fC", tempC);
+        sprintf(strtemp," %.2fC", g_dados.temperatura);
         strcat(buffer4, g_dados.hora);
         strcat(buffer4, strtemp);
 

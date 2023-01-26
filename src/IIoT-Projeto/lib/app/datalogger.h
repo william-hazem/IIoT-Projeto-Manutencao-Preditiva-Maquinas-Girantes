@@ -25,7 +25,7 @@
 /**
  * @brief Ponto de montagem do cartão SD
  */
-#define MOUNT_POINT "/sd"
+#define MOUNT_POINT "/sdcard"
 
 /**
  * @brief Dispositivo i2c para o ds1307 

@@ -8,3 +8,6 @@
 # proteus
 .pdsbak
 .workspace
+
+# secrets
+lib/app/azure-key.h

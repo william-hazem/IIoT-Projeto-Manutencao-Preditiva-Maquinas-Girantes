@@ -22,9 +22,6 @@
 
 #define WAKEUP_PERIOD 10000000U // Periodo de aquisição dos dados
 
-#define BROKER_URI "broker.emqx.io"
-#define W2P        "/grupoZ"         /// onde publicar
-
 /// @brief Dados da aplicação
 
 typedef struct app_t {

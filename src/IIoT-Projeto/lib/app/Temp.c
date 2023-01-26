@@ -9,11 +9,12 @@ void Temp_tesk(void *args) {
     int adcVal = 0;
     float milliVolt = 0.0;
     tempC = .0f;
-    adc1_config_channel_atten(ADC1_CHANNEL_5, ADC_ATTEN_DB_11); // ~ 2650mv
-    
+    esp_err_t ret = adc1_config_channel_atten(ADC1_CHANNEL_5, ADC_ATTEN_DB_11); // ~ 2650mv
+    adc1_config_width(ADC_WIDTH_10Bit);
+    if(ret != ESP_OK) vTaskDelete(NULL);
     for(;;)
     {
-        adc2_get_raw(ADC1_CHANNEL_5, ADC_WIDTH_BIT_10, &adcVal);
+        adcVal = adc1_get_raw(ADC1_CHANNEL_5);
         milliVolt = adcVal * (5000.0 / 1024.0);
 
         g_dados.temperatura = milliVolt / 10;
