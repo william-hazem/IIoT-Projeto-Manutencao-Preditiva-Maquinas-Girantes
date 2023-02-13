@@ -1,0 +1,31 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install platformio
+        platformio platform install espressif32
+        platformio lib install 467
+
+    - name: Secrets
+      run: |
+          cd src/IIoT-Projeto/lib/app/
+          echo "#define IOTHUB_NAME \"secret\"" > "azure-key.h"
+          echo "#define IOTHUB_DEVID \"secret\"" >> "azure-key.h"
+          echo "#define IOTHUB_KEY \"secret\"" >> "azure-key.h"
+
+    - name: Build project
+      run: |
+        cd src/IIoT-Projeto
+        platformio run
