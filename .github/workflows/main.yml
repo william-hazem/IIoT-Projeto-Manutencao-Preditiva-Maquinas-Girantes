@@ -39,6 +39,5 @@ jobs:
           echo "#define IOTHUB_KEY \"secret\"" >> "azure-key.h"
     - name: Run PlatformIO
       run: |
-        idf.py fullclean
         cd src/IIoT-Projeto/
         platformio run
