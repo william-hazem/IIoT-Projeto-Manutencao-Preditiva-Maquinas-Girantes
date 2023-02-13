@@ -33,7 +33,7 @@ jobs:
       run:  pio lib install
     - name: Secrets
       run: |
-          cd src/lib/app/
+          cd src/IIoT-Projeto/lib/app/
           echo "#define IOTHUB_NAME "secret"" > "azure-key.h"
           echo "#define IOTHUB_DEVID "secret"" >> "azure-key.h"
           echo "#define IOTHUB_KEY "secret"" >> "azure-key.h"
