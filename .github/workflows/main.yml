@@ -31,8 +31,14 @@ jobs:
     # It is important to first install the libraries before compiling, since otherwise compilation might fail to find the just-installed libraries
     - name: Install platformIO libraries
       run:  pio lib install
+    - name: Secrets
+      run: |
+          cd src/lib/app/
+          echo "#define IOTHUB_NAME "secret"" > "azure-key.h"
+          echo "#define IOTHUB_DEVID "secret"" >> "azure-key.h"
+          echo "#define IOTHUB_KEY "secret"" >> "azure-key.h"
     - name: Run PlatformIO
       run: |
         cd src/IIoT-Projeto/
         git init
-        platformio run -e workflow
+        platformio run
