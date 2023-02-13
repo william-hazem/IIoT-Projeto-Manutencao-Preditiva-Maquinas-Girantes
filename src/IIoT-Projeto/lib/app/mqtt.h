@@ -3,22 +3,14 @@
 #include <freertos/task.h>
 #include <mqtt_client.h>
 #include <esp_log.h>
+#include <esp_system.h>
 
 #include <string.h>
 
 #include "common.h"
 #include "fft.h"
 
-#ifndef NOAZUREKEYS
 #include "azure-key.h"
-#else
-/** @brief IOT HUB NAME */ 
-#define IOTHUB_NAME     "iothub-name"
-/** @brief IOT HUB Device ID */ 
-#define IOTHUB_DEVID    "dev-id"
-/** @brief IOT HUB Device SaS Key */ 
-#define IOTHUB_KEY      "sas-token"
-#endif
 
 #define W2P "devices/"IOTHUB_DEVID"/messages/events/"
 
