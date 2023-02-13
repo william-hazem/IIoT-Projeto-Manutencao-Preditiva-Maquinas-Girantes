@@ -34,4 +34,5 @@ jobs:
     - name: Run PlatformIO
       run: |
         cd src/IIoT-Projeto/
+        git init
         platformio run -e workflow
