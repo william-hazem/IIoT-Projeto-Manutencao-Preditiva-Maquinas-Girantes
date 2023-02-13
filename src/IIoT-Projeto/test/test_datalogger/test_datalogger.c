@@ -72,13 +72,13 @@ void test_ds1307_read()
 
     struct tm read;
     ret = ds1307_get_time(&dev, &read);
-    ets_printf("ret %s\n", esp_err_to_name(ret));
-    ets_printf("%02d %02d\n", read.tm_hour, data.tm_hour);
-    ets_printf("%02d %02d\n", read.tm_min, data.tm_min);
-    ets_printf("%02d %02d\n", read.tm_sec, data.tm_sec);
-    ets_printf("%02d %02d\n", read.tm_year, data.tm_year);
-    ets_printf("%02d %02d\n", read.tm_mon, data.tm_mon);
-    ets_printf("%02d %02d\n", read.tm_mday, data.tm_mday);
+    // ets_printf("ret %s\n", esp_err_to_name(ret));
+    // ets_printf("%02d %02d\n", read.tm_hour, data.tm_hour);
+    // ets_printf("%02d %02d\n", read.tm_min, data.tm_min);
+    // ets_printf("%02d %02d\n", read.tm_sec, data.tm_sec);
+    // ets_printf("%02d %02d\n", read.tm_year, data.tm_year);
+    // ets_printf("%02d %02d\n", read.tm_mon, data.tm_mon);
+    // ets_printf("%02d %02d\n", read.tm_mday, data.tm_mday);
     
 
     TEST_ASSERT_EQUAL(read.tm_hour, data.tm_hour);

@@ -94,10 +94,10 @@ void app_main()
     i2c_bus_init();
     
 
-    ets_printf("-- TASK DIVISION --\n");
-    ets_printf("DISPLAY PERIOD     \t%d\t%d\n", TASK_PERIOD(DISPLAY));
-    ets_printf("ACQUISITION PERIOD \t%u\n",     TASK_PERIOD(AQUISITION));
-    ets_printf("-------------------\n");
+    // ets_printf("-- TASK DIVISION --\n");
+    // ets_printf("DISPLAY PERIOD     \t%d\t%d\n", TASK_PERIOD(DISPLAY));
+    // ets_printf("ACQUISITION PERIOD \t%u\n",     TASK_PERIOD(AQUISITION));
+    // ets_printf("-------------------\n");
     
     datalogger_init();
     init_oled();
@@ -110,7 +110,7 @@ void app_main()
       
     
 
-    ets_printf("INIT FINISHED\n");
+    // ets_printf("INIT FINISHED\n");
     // if(setTime() == ESP_OK)
     //     ets_printf("Tempo definido\n");
     // else
@@ -121,7 +121,7 @@ void app_main()
     xTaskCreate(vbr_task, "AQUISITION TASK", 2048, NULL, AQUISITION_PRIORITY, &gth_aquisition);
     xTaskCreate(Temp_tesk, "TEMPERATUDA TASK", 1024, NULL, TEMP_PRIORITY, &gth_temp);
 
-    ets_printf("SETUP FINISHED\n");
+    // ets_printf("SETUP FINISHED\n");
 
     time_t time_before = time(NULL);
     float* ref = g_dados.vbr_begin;

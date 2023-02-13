@@ -91,16 +91,16 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 }
 
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data) {
-    ESP_LOGD(TAGM, "Event dispatched from event loop base=%s, event_id=%d", base, event_id);
+    ESP_LOGI(TAGM, "Event dispatched from event loop base=%s, event_id=%d", base, event_id);
     mqtt_event_handler_cb((esp_mqtt_event_handle_t) event_data);
 }
 
 static void mqtt_app_start(void)
 {
     mqttConnected = false;
-    ESP_LOGD(TAGM, "inicializando cliente mqtt");
+    ESP_LOGI(TAGM, "inicializando cliente mqtt");
     const char* username = IOTHUB_NAME".azure-devices.net/"IOTHUB_DEVID"/?api-version=2021-04-12";
-    ESP_LOGD(TAGM, "mqtt username: %s", username);
+    ESP_LOGI(TAGM, "mqtt username: %s", username);
     esp_mqtt_client_config_t mqtt_cfg = {
         .uri = "mqtts://"IOTHUB_NAME".azure-devices.net",
         .port=8883,

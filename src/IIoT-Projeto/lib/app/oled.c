@@ -137,7 +137,7 @@ void update_hora_task(void *args)
     vTaskDelay(10);
     
     xSemaphoreGive(i2c_mutex);
-    ets_printf("%02d:%02d:%02d", data.tm_hour, data.tm_min, data.tm_sec);
+    // ets_printf("%02d:%02d:%02d", data.tm_hour, data.tm_min, data.tm_sec);
 
     time_t last = time(NULL);
     char buffer[32] = "vazio";
