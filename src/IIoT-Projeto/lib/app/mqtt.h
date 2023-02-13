@@ -1,31 +1,28 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stddef.h>
-#include <string.h>
-#include "esp_wifi.h"
-#include "esp_system.h"
-#include "nvs_flash.h"
-#include "esp_event.h"
-#include "esp_netif.h"
 
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/semphr.h"
-#include "freertos/queue.h"
+#include <freertos/task.h>
+#include <mqtt_client.h>
+#include <esp_log.h>
 
-#include "lwip/sockets.h"
-#include "lwip/dns.h"
-#include "lwip/netdb.h"
-
-#include "esp_log.h"
-#include "mqtt_client.h"
+#include <string.h>
 
 #include "common.h"
+#include "fft.h"
+
+#ifndef NOAZUREKEYS
 #include "azure-key.h"
+#else
+/** @brief IOT HUB NAME */ 
+#define IOTHUB_NAME     "iothub-name"
+/** @brief IOT HUB Device ID */ 
+#define IOTHUB_DEVID    "dev-id"
+/** @brief IOT HUB Device SaS Key */ 
+#define IOTHUB_KEY      "sas-token"
+#endif
 
 #define W2P "devices/"IOTHUB_DEVID"/messages/events/"
 
-static const char *TAGM = "MQTT_EXAMPLE";
+static const char *TAGM = "MQTT_CLIENT";
 
 bool mqttConnected;
 
@@ -120,19 +117,47 @@ static void mqtt_app_start(void)
 /**
  * @brief Publica os dados da aplicação no Broker
  */
-char buffer_vbr[3000];
 void mqtt_publicar(void)
 {
     if(!mqttConnected)
         return;
 
-    char buffer[32] = "";
+    char msg[256] = "";
+
+    int msg_id;
+    sprintf(msg, "{\"temp\": \"%.2f\", \"axRMS\": \"%.2f\"", g_dados.temperatura, g_dados.vbr_rms);
     
-    sprintf(buffer, "%.2f", g_dados.temperatura);
-    esp_mqtt_client_publish(client, W2P"temp", buffer, strlen(buffer), 1, 1);
-    sprintf(buffer, "%.2f", g_dados.vbr_rms);
-    esp_mqtt_client_publish(client, W2P"/accRMS", buffer, strlen(buffer), 1, 1);
+    unsigned n = 3000, r = log2_u(n);
     
+    /// conversão necessária para utilizar a função fft
+    complex_f *fft = malloc(sizeof(complex_f) * n);
+    for(int i = 0; i < n; i++)
+    {
+        fft[i].re = (float)*(g_dados.vbr_begin+i);
+        fft[i].im = 0.f;
+    }
+    /// calcula a fft
+    ffti_f(fft, r, FFT_FORWARD);
+    
+
+    strcat(msg, ", \"axF\": \"[");
+    for(int i = 0; i < 10; i++)
+    {
+        char value[9] = "";
+        if(i < 9)
+            sprintf(value, "%.2f,", fft[i].re);
+        else
+            sprintf(value, "%.2f]\"", fft[i].re);
+        strcat(msg, value);
+    }
+
+    strcat (msg, "}");
+
+    ESP_LOGI(TAGM, "device->cloud: %s", msg);
+    msg_id = esp_mqtt_client_publish(client, W2P, msg, strlen(msg), 1, 1);
+    ESP_LOGI(TAGM, "temp msg_id= %d", msg_id);
+    free(fft);
+
     // esp_mqtt_client_publish(client, W2P"/rms", buffer, strlen(buffer), 1, 1);
 
     // memcpy(buffer_vbr, g_dados.vbr_begin, g_dados.vbr_end - g_dados.vbr_begin);

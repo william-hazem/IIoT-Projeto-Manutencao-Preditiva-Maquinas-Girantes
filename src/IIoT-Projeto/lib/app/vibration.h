@@ -18,14 +18,8 @@
 
 #include "common.h"
 
-#ifndef TESTE
-#   define VBR_MAX_BUFFER_SIZE 3000
-#else
-#   define VBR_MAX_BUFFER_SIZE 5
-#   define VBR_FREQ            1
-#   define VBR_DELAY           1 / VBR_FREQ * 1000
-#   define VBR_DEFAULT_DATA    {2, 3, 1, 4, 5}
-#endif
+#define VBR_MAX_BUFFER_SIZE 3000
+
 
 float vbr_data[VBR_MAX_BUFFER_SIZE];
 float vbr_datay[VBR_MAX_BUFFER_SIZE];

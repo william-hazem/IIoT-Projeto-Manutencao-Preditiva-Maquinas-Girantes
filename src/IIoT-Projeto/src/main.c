@@ -15,7 +15,7 @@
 #include "Temp.h"
 
 #include <wifi.h>
-#include <mqqt.h>
+#include <mqtt.h>
 #include <http.h>
 #include <nvs_flash.h>
 
@@ -107,7 +107,7 @@ void app_main()
         ESP_LOGI(TAGM, "VBR initialized\n");
     else
         ESP_LOGE(TAGM, "VBR NOT initialized\n");
-    
+      
     
 
     ets_printf("INIT FINISHED\n");
@@ -130,7 +130,7 @@ void app_main()
 
         if(g_dados.vbr_count >= 3000)
         {
-            vTaskSuspend(gth_aquisition);
+            // vTaskSuspend(gth_aquisition);
             
             // ESP_LOGI(TAGM, "- %d reads on %ld", g_dados.vbr_count, time(NULL) - time_before);
             // #ifdef STATUS
@@ -140,7 +140,7 @@ void app_main()
 
             // #endif
             
-            g_dados.vbr_count = 0;
+            // g_dados.vbr_count = 0;
 
             // vTaskSuspend(gth_display);
             // vTaskSuspend(gth_update_hora);
@@ -150,12 +150,13 @@ void app_main()
             // esp_sleep_enable_timer_wakeup(WAKEUP_PERIOD);
             // esp_light_sleep_start();
             ESP_LOGI(TAGM, "$SLEEP");
-            vTaskDelay(2000 / portTICK_PERIOD_MS);
+            vTaskDelay(10000 / portTICK_PERIOD_MS);
             ESP_LOGI(TAGM, "$WAKEUP");
 
             /// re-inicializa as tasks após o sono profundo
             // vTaskResume(gth_display);
-            vTaskResume(gth_aquisition);
+            // vTaskResume(gth_aquisition);
+            xTaskCreate(vbr_task, "AQUISITION TASK", 2048, NULL, AQUISITION_PRIORITY, &gth_aquisition);
             // vTaskResume(gth_update_hora);
 
             time_before = time(NULL);

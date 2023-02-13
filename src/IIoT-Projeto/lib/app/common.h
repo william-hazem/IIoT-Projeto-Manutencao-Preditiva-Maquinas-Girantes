@@ -12,9 +12,9 @@
 #ifndef __COMMON_H
 #define __COMMON_H
 
-#define APP_RUN 0x4              // Estado de execução
+#define APP_RUN 0x4 | 0x2              // Estado de execução
 
-#if APP_RUN ==2                   // habilita configurações de teste
+#if APP_RUN & 0x2                   // habilita configurações de teste
 #   define TESTE
 #elif APP_RUN & 0x4            // habilita o log de status no console
 # define STATUS
