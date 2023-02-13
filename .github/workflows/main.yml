@@ -34,9 +34,9 @@ jobs:
     - name: Secrets
       run: |
           cd src/IIoT-Projeto/lib/app/
-          echo "#define IOTHUB_NAME "secret"" > "azure-key.h"
-          echo "#define IOTHUB_DEVID "secret"" >> "azure-key.h"
-          echo "#define IOTHUB_KEY "secret"" >> "azure-key.h"
+          echo "#define IOTHUB_NAME \"secret\"" > "azure-key.h"
+          echo "#define IOTHUB_DEVID \"secret\"" >> "azure-key.h"
+          echo "#define IOTHUB_KEY \"secret\"" >> "azure-key.h"
     - name: Run PlatformIO
       run: |
         cd src/IIoT-Projeto/
