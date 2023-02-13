@@ -34,4 +34,4 @@ jobs:
     - name: Run PlatformIO
       run: |
         cd src/IIoT-Projeto/
-        platformio run
+        platformio run -e workflow
