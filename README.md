@@ -17,9 +17,13 @@ Então, ferramentas de análise para máquinas girantes poderão auxiliar na tom
 ## Recursos
 - Conectivade com a nuvem via Wi-Fi
 - Dispositivo Azure IoT Hub
+- Integração PowerBI
 - Monitoramento de Vibração
 - Monitoramento de temperatura
 - Armazenamento Local
+
+![image](midia/iiot-dashboard.png)
+
 
 ## Instalação
 
