@@ -14,6 +14,12 @@ Efetuar a substituição de um equipamento antes da hora, ocasionará em prejuí
 
 Então, ferramentas de análise para máquinas girantes poderão auxiliar na tomada de decisão, apontando falhas e estimando a vida útil restante dos equipamentos. Para que, possa ocorrer a manutenção preventiva do equipamento antes que ocorra uma falha crítica, assim minimizando os impactos na produção.
 
+## Recursos
+- Conectivade com a nuvem via Wi-Fi
+- Dispositivo Azure IoT Hub
+- Monitoramento de Vibração
+- Monitoramento de temperatura
+- Armazenamento Local
 
 ## Instalação
 
@@ -22,7 +28,10 @@ Algumas dependências possuem fácil instalação por meio de seus repositórios
 git clone --recurse-submodules https://github.com/william-hazem/IIoT-Projeto-Manutencao-Preditiva-Maquinas-Girantes
 ```
 
-## Material utilizado
+* Adicione suas chaves da Azure em algum ponto em que a diretiva possa ser acessada pelo cabeçalho do `app/mqtt`
+* Configure os parâmetros da conexão WiFi
+
+## Componentes utilizados
 * [Esp-32](https://www.alldatasheet.com/view.jsp?Searchword=Esp32%20datasheet&gclid=CjwKCAiA9qKbBhAzEiwAS4yeDeI7po4PLbK3pjVwZteYmlg82jyRDaVdivmHAtsPh1cijuFFRzoJ9xoCtMAQAvD_BwE)
 * [Display Oled Ssd 1306](https://www.alldatasheet.com/view.jsp?Searchword=Ssd1306%20datasheet&gclid=CjwKCAiA9qKbBhAzEiwAS4yeDXkNi0S-0cQt8U6twi88OrERvhTNjdOnKnPOsK7tNTRjT_KVJQgxNhoCB9UQAvD_BwE)
 * [Mpu Acelerômetro e Giroscópio MPU-6050](https://www.alldatasheet.com/view.jsp?Searchword=MPU-6050)
