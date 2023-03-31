@@ -21,7 +21,7 @@ Então, ferramentas de análise para máquinas girantes poderão auxiliar na tom
 - Monitoramento de Vibração
 - Monitoramento de temperatura
 - Armazenamento Local
-
+- Espectro do sinal
 ![image](midia/iiot-dashboard.png)
 
 
